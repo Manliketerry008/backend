@@ -77,7 +77,7 @@ let db;
             }
         });
 
-        app.put('/collection/Products/:_id', async (req, res, next) => {
+        app.put('/collection/Lessons/:_id', async (req, res, next) => {
             try {
                 const { _id } = req.params;
                 const { spaces } = req.body;
