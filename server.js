@@ -77,51 +77,37 @@ let db;
             }
         });
 
-    app.put('/collection/Products/:_id', async (req, res, next) => {
-        try {
-            const { _id } = req.params;
-            const { Spaces } = req.body;
-
-        if (!ObjectId.isValid(_id)) {
-            return res.status(400).json({ msg: 'Invalid product ID.' });
-            }
-
-        if (typeof Spaces !== 'number') {
-            return res.status(400).json({ msg: 'Spaces must be a number.' });
-            }
-
-            const collection = db.collection('Products');
-            const result = await collection.updateOne(
-            { _id: new ObjectId(_id) },
-            { $set: { Spaces } }
-            );
-
-        console.log('Matched:', result.matchedCount, '| Modified:', result.modifiedCount);
-            if (result.modifiedCount === 1) {
-                res.json({ msg: 'Update successful', updatedId: _id });
-            } else {
-                res.status(404).json({ msg: 'No matching product found or no update made.' });
-            }
+        app.put('/collection/Products/:_id', async (req, res, next) => {
+            try {
+                const { _id } = req.params;
+                const { spaces } = req.body;
+        
+                if (!ObjectId.isValid(_id)) {
+                    return res.status(400).json({ msg: 'Invalid product ID.' });
+                }
+        
+                if (typeof Spaces !== 'number') {
+                    return res.status(400).json({ msg: 'Spaces must be a number.' });
+                }
+        
+                const collection = db.collection('Products');
+                const result = await collection.updateOne(
+                    { _id: new ObjectId(_id) },
+                    { $set: { spaces: spaces } } // 👈 lowercase 'spaces'
+                );
+        
+                console.log('Matched:', result.matchedCount, '| Modified:', result.modifiedCount);
+                if (result.modifiedCount === 1) {
+                    res.json({ msg: 'Update successful', updatedId: _id });
+                } else {
+                    res.status(404).json({ msg: 'No matching product found or no update made.' });
+                }
             } catch (err) {
                 console.error('Update error:', err);
                 next(err);
             }
         });
-
-
-    app.put('/collection/:collectionName/:_id', async (req, res, next) => {
-        try {
-            const result = await req.collection.updateOne(
-            { _id: new ObjectId(req.params._id) },
-            { $set: req.body },
-            { upsert: false }
-        );
-
-            res.json(result.modifiedCount === 1 ? { msg: 'success' } : { msg: 'error' });
-            } catch (err) {
-            next(err);
-            }
-        });
+        
 
     app.get('/collection/:collectionName/:_id', async (req, res, next) => {
         try {
