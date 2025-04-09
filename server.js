@@ -86,14 +86,14 @@ let db;
                     return res.status(400).json({ msg: 'Invalid product ID.' });
                 }
         
-                if (typeof Spaces !== 'number') {
+                if (typeof spaces !== 'number') {
                     return res.status(400).json({ msg: 'Spaces must be a number.' });
                 }
         
                 const collection = db.collection('Products');
                 const result = await collection.updateOne(
                     { _id: new ObjectId(_id) },
-                    { $set: { spaces: spaces } } // 👈 lowercase 'spaces'
+                    { $set: { spaces: spaces } }
                 );
         
                 console.log('Matched:', result.matchedCount, '| Modified:', result.modifiedCount);
@@ -106,7 +106,7 @@ let db;
                 console.error('Update error:', err);
                 next(err);
             }
-        });
+        });        
         
 
     app.get('/collection/:collectionName/:_id', async (req, res, next) => {
