@@ -50,8 +50,7 @@ let db;
             next();
         });
 
-    app.use(express.static(path.join(__dirname, 'images')));
-
+    app.use('/images', express.static(path.join(__dirname, 'images')));    
 
     app.get('/', (req, res) => {
         res.send('Select a collection, e.g., /collection/messages');
