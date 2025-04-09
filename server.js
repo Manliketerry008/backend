@@ -92,7 +92,7 @@ let db;
         
                 const collection = db.collection('Products');
                 const result = await collection.updateOne(
-                    { _id: new ObjectId(_id) },
+                    { _id: new ObjectId(_id) },  // Ensure _id is converted correctly
                     { $set: { spaces: spaces } }
                 );
         
@@ -106,7 +106,8 @@ let db;
                 console.error('Update error:', err);
                 next(err);
             }
-        });        
+        });
+                
         
 
     app.get('/collection/:collectionName/:_id', async (req, res, next) => {
