@@ -90,7 +90,7 @@ let db;
                     return res.status(400).json({ msg: 'Spaces must be a number.' });
                 }
         
-                const collection = db.collection('Products');
+                const collection = db.collection('Lessons');
                 const result = await collection.updateOne(
                     { _id: new ObjectId(_id) },  // Ensure _id is converted correctly
                     { $set: { spaces: spaces } }
